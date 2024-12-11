@@ -2,7 +2,7 @@
 
 ## **Overview**
 
-This project implements **Branch and Bound (B&B)** algorithms for solving key combinatorial optimization problems using CPLEX. It includes problem formulations, benchmark dataset experiments, and performance evaluation.
+This project implements **Branch and Bound (B&B)** algorithms for solving key combinatorial optimization problems using Gurobi. It includes problem formulations, benchmark dataset experiments, and performance evaluation.
 
 The problems addressed include:
 1. **Generalized Assignment Problem (GAP)** with a minimization objective.
