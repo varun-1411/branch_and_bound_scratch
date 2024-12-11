@@ -1,43 +1,103 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/9ooGE5cO)
-# :memo: Assignment 1
+# 🚀 **Branch and Bound for Combinatorial Optimization Problems**
 
-## Objective
+## **Overview**
 
-In this assignment, you are required to write branch and bound codes and test it on benchmark datasets for the following problems. 
+This project implements **Branch and Bound (B&B)** algorithms for solving key combinatorial optimization problems using CPLEX. It includes problem formulations, benchmark dataset experiments, and performance evaluation.
 
-- Generalized assingment problem (use a min objective)
-- Uncapacitated Facility location (extended formulation)
-- Uncapacitated Facility location (compact formulation)
-- Asymmetric TSP (MTZ formulation)
-- Assymetric TSP (CW multi-commodity flow formulation)
+The problems addressed include:
+1. **Generalized Assignment Problem (GAP)** with a minimization objective.
+2. **Uncapacitated Facility Location (UFL)**:
+   - Weaker/Compact formulation.
+   - Extended formulation.
+3. **Asymmetric Traveling Salesman Problem (ATSP)**:
+   - Multi-commodity flow (MCF) formulation.
+   - Miller-Tucker-Zemlin (MTZ) formulation.
 
-## Data 
-The data on which your models must be run is in three folders: GAP, UFL, and ATSP. 
-- GAP [[Description]](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/gapinfo.html)
-- UFL [[Description]](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/uncapinfo.html)
-- ATSP [[Description]](http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp95.pdf) [[Best known solutions]](http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/ATSP.html)
+---
 
-## Problems
-1. Read the documentation for each of the problems and setup the model as integer programs and solve them using CPLEX. Set a time limit of 120 s and report the following information. Export the problems to a .lp format to a `lp_files` folder. Name your .lp files using the problem names. Upload 5 serparate codes, one for each formulation.
+## 📊 **Project Structure**
 
-| Problem Class  | Instance | LP Relaxation | Best IP solution | Nodes explored | GAP | Time |
-| ------------- | --- |------------- | ---------------- | ------------------------ |---- | ----|
-| ATSP-CW  |  |  |     |            | | |
+The repository is organized as follows:
 
-2. Write your branch and bound code to read files directly from the lp_files folder. Terminate your code after 120 s and create a similar table as done in Problem 1. Upload the codes and the two tables as a PDF. 
+```plaintext
+root/
+│
+├── data/                     # Contains the benchmark datasets (GAP, UFL, ATSP)
+│   ├── GAP/                  # GAP dataset
+│   ├── UFL/                  # UFL dataset
+│   └── ATSP/                 # ATSP dataset
+│
+├── lp_files/                 # Exported .lp files for each problem instance
+│
+├── src/                      # Code for model formulation and B&B implementation
+│   ├── gap_solver.py         # Generalized Assignment Problem solver
+│   ├── ufl_solver.py         # Uncapacitated Facility Location solver
+│   ├── atsp_mcf_solver.py    # ATSP solver (MCF formulation)
+│   ├── atsp_mtz_solver.py    # ATSP solver (MTZ formulation)
+│   ├── branch_and_bound.py   # Generic Branch and Bound implementation
+│   └── utils/                # Helper functions (e.g., file I/O, preprocessing)
+│
 
-## Rules and Dos and Don'ts
-- The competition part applies only to Problem 2 (your code)
-- No parallel processing is allowed
-- You are allowed to use a preprocessing phase
-- The time for your codes must include importing the LP file, preprocessing, and B&B code
-- No cuts must be added
-- You can experiment with different branching and variable selection strategies
-- The summary tables will be made public after Round 1. 
-- There are a total of 46 problem instances. The submission with the best gap for the most number of instances will be awarded the extra points in Round 2.
+```
+
+---
+
+## 🛠️ **Problem Descriptions**
+
+### 1. **Generalized Assignment Problem (GAP)**  
+The GAP involves assigning tasks to agents with a given cost and resource capacity constraints.  
+- **Dataset**: [OR Library](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/gapinfo.html)
+
+### 2. **Uncapacitated Facility Location (UFL)**  
+UFL aims to determine the locations of facilities to minimize the cost of opening facilities and serving clients.  
+- **Dataset**: [OR Library](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/uncapinfo.html)
+
+### 3. **Asymmetric Traveling Salesman Problem (ATSP)**  
+The ATSP finds the shortest route for a salesman visiting a set of cities with asymmetric travel costs.  
+- **Formulations**:
+   - **MTZ**: Miller-Tucker-Zemlin formulation.
+   - **MCF**: Multi-commodity flow formulation.  
+- **Dataset**: [TSPLIB95](http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp95.pdf)  
 
 
-# GAP results
+
+| File      | LP Relaxation | Best Objective | Nodes Explored | Gap (%) | Time Taken (s) |
+|-----------|---------------|----------------|----------------|---------|----------------|
+| a05100    | 1698.00       | 1698.00        | 83             | 0.0     | 0.19           |
+| a05200    | 3235.00       | 3235.00        | 17             | 0.0     | 0.06           |
+
+
+
+| File      | LP Relaxation | Best Objective | Nodes Explored | Gap (%) | Time Taken (s) |
+|-----------|---------------|----------------|----------------|---------|----------------|
+| br17.atsp | 39.0          | 39.0           | 99             | 0.0     | 3.10           |
+
+
+
+| File      | LP Relaxation | Best Objective | Nodes Explored | Gap (%) | Time Taken (s) |
+|-----------|---------------|----------------|----------------|---------|----------------|
+| br17.atsp | 2.11          | 10169.0        | 53388          | 99.97%  | 120.00         |
+
+
+
+| File      | LP Relaxation | Best Objective | Nodes Explored | Gap (%) | Time Taken (s) |
+|-----------|---------------|----------------|----------------|---------|----------------|
+| ufl1      | 1742.0        | 1742.0         | 159            | 0.0     | 5.13           |
+
+---
+
+## 🚀 **Features**
+- **Modeling**: Formulates problems as integer programs.
+- **Solver**: Uses Gurobi to solve and export LP files.
+- **Branch and Bound**: Implements a custom B&B algorithm.
+- **Benchmarking**: Compares performance on publicly available datasets.
+
+---
+
+## 📊 **Performance Results**
+
+### **Generalized Assignment Problem (GAP)**
+
 | File      | LP Relaxation | Best Objective | Nodes Explored | Gap (%) | Time Taken (seconds) |
 |-----------|---------------|----------------|----------------|---------|----------------------|
 | a05100    | 1698.00       | 1698.00        | 83             | 0.0     | 0.19                 |
@@ -53,7 +113,9 @@ The data on which your models must be run is in three folders: GAP, UFL, and ATS
 | b20100    | 1155.18       | 1452.00        | 6083           | 20.44   | 120.02               |
 | b20200    | 2331.14       | 2825.00        | 2325           | 17.48   | 120.00               |
 
-# ATSP with MCF formulation
+### **ATSP Results**
+
+#### **MCF Formulation**
 
 | File         | LP Relaxation  | Best Objective | Nodes Explored | Gap (%)           | Time Taken (seconds) |
 |--------------|----------------|----------------|----------------|-------------------|----------------------|
@@ -72,7 +134,7 @@ The data on which your models must be run is in three folders: GAP, UFL, and ATS
 | p43.atsp     | 5611.0         | inf            | 65             | inf%              | 120.01               |
 | ry48p.atsp   | 14289.33       | inf            | 17             | inf%              | 120.07               |
 
-# ATSP with MTZ formulation
+#### **MTZ Formulation**
 
 | File         | LP Relaxation  | Best Objective | Nodes Explored | Gap (%)           | Time Taken (seconds) |
 |--------------|----------------|----------------|----------------|-------------------|----------------------|
@@ -96,6 +158,7 @@ The data on which your models must be run is in three folders: GAP, UFL, and ATS
 | rbg443.atsp  | 0.0            | 0.0            | 1              | 0.0%              | 1.39           |
 | ry48p.atsp   | 12563.70     | inf            | 1953           | inf%              | 120.05           |
 
+### **UFL Results**
 # UFL with weaker formulation
 
 | File        | LP Relaxation | Best Objective | Nodes Explored | Gap (%) | Time Taken (seconds) |
